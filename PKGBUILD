@@ -8,11 +8,12 @@ pkgdesc="The monolithic Norg static site generator built with Rust"
 arch=(x86_64)
 url="https://github.com/NTBBloodbath/norgolith"
 license=('GPL-2.0-only')
-makedepends=(git cargo)
+makedepends=(git cargo openssl libgit2 libssh2 zlib pkg-config)
 source=("$_pkgname::git+$url.git")
 sha256sums=('SKIP')
 
-_depends=(glibc gcc-libs)
+_depends=(glibc gcc-libs openssl libgit2 libssh2 zlib)
+options=(!debug !lto)
 
 pkgver() {
   cd "$_pkgname"
@@ -25,7 +26,7 @@ build() {
 }
 
 _package() {
-  install -Dm755 "$_pkgname/target/release/${_pkgname}" -t "$pkgdir/usr/bin"
+  install -Dm755 "$_pkgname/target/release/lith" -t "$pkgdir/usr/bin"
 }
 
 package_norgolith-git() {
